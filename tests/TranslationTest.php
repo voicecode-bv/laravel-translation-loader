@@ -35,7 +35,7 @@ class TranslationTest extends TestCase
     {
         $this->createTranslation('*', 'database.key', [
             'value_en' => 'test en',
-            'value_nl' => 'test nl'
+            'value_nl' => 'test nl',
         ]);
 
         $this->assertEquals('test nl', trans('database.key', [], 'nl'));
