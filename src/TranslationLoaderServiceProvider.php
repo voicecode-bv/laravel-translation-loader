@@ -2,22 +2,27 @@
 
 namespace Esign\TranslationLoader;
 
+use Esign\TranslationLoader\Commands\ClearTranslationsCacheCommand;
 use Esign\TranslationLoader\Exceptions\InvalidConfiguration;
 use Esign\TranslationLoader\Loaders\AggregateLoader;
 use Esign\TranslationLoader\Models\Translation;
 use Esign\UnderscoreTranslatable\UnderscoreTranslatable;
+use Illuminate\Cache\CacheManager;
+use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Translation\TranslationServiceProvider as BaseTranslationServiceProvider;
-use Illuminate\Translation\Translator;
 
 class TranslationLoaderServiceProvider extends BaseTranslationServiceProvider
 {
     public function boot()
     {
         if ($this->app->runningInConsole()) {
+            $this->commands([ClearTranslationsCacheCommand::class]);
+
             $this->publishes([
                 $this->configPath() => config_path('translation-loader.php'),
             ], 'config');
+
             $this->publishes([
                 $this->migrationPath() => database_path('migrations/' . date('Y_m_d_His', time()) . '_create_translations_table.php'),
             ], 'migrations');
@@ -29,6 +34,7 @@ class TranslationLoaderServiceProvider extends BaseTranslationServiceProvider
         parent::register();
 
         $this->registerTranslator();
+        $this->registerTranslationsCache();
         $this->mergeConfigFrom($this->configPath(), 'translation-loader');
     }
 
@@ -41,8 +47,22 @@ class TranslationLoaderServiceProvider extends BaseTranslationServiceProvider
         });
     }
 
+    protected function registerTranslationsCache(): void
+    {
+        $this->app->bind(TranslationsCache::class, function (Application $app) {
+            $cacheManager = $app->make(CacheManager::class);
+
+            return new TranslationsCache(
+                $cacheManager->store(config('translation-loader.cache.store')),
+                config('translation-loader.cache.key'),
+                config('translation-loader.cache.ttl'),
+            );
+        });
+    }
+
     protected function registerTranslator(): void
     {
+        $this->app->alias('translator', Translator::class);
         $this->app->singleton('translator', function ($app) {
             $translator = config('translation-loader.translator') ?? Translator::class;
             $loader = $app['translation.loader'];

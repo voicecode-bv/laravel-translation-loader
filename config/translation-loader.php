@@ -20,19 +20,28 @@ return [
      */
     'model' => \Esign\TranslationLoader\Models\Translation::class,
 
-    /**
-     * The key that will be used to cache the database translations.
-     */
-    'cache_key' => 'translations',
+    'cache' => [
+        /**
+         * The key that will be used to cache the database translations.
+         */
+        'key' => 'esign.laravel-translation-loader.translations',
+
+        /**
+         * The duration for which database translations will be cached.
+         */
+        'ttl' => \DateInterval::createFromDateString('24 hours'),
+
+        /**
+         * The cache store to be used for database translations.
+         * Use null to utilize the default cache store from the cache.php config file.
+         * To disable caching, you can use the 'array' store.
+         */
+        'store' => null,
+    ],
 
     /**
-     * The amount of seconds the database translations will be cached for.
-     */
-    'cache_remember' => 15,
-
-    /**
-     * This translator creates new entries to the database if the translation could not be found.
-     * In case you do not want this behaviour, you may set this to null.
+     * Configuration for the custom translator class that handles missing translation keys.
+     * This class overrides Laravel's default `translator` binding.
      */
     'translator' => \Esign\TranslationLoader\Translator::class,
 ];

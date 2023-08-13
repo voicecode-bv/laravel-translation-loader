@@ -3,6 +3,8 @@
 namespace Esign\TranslationLoader\Tests;
 
 use Esign\TranslationLoader\Models\Translation;
+use Esign\TranslationLoader\Tests\Support\InteractsWithTranslator;
+use Esign\TranslationLoader\Tests\Support\MakesQueryCountAssertions;
 use Esign\TranslationLoader\TranslationLoaderServiceProvider;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -10,6 +12,19 @@ use Orchestra\Testbench\TestCase as BaseTestCase;
 
 abstract class TestCase extends BaseTestCase
 {
+    protected function setUpTraits(): void
+    {
+        $uses = parent::setUpTraits();
+
+        if (isset($uses[InteractsWithTranslator::class])) {
+            $this->setUpInteractsWithTranslator();
+        }
+
+        if (isset($uses[MakesQueryCountAssertions::class])) {
+            $this->setUpMakesQueryCountAssertions();
+        }
+    }
+
     protected function getPackageProviders($app): array
     {
         return [TranslationLoaderServiceProvider::class];
