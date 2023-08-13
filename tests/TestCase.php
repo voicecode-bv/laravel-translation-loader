@@ -3,8 +3,8 @@
 namespace Esign\TranslationLoader\Tests;
 
 use Esign\TranslationLoader\Models\Translation;
-use Esign\TranslationLoader\Tests\Support\InteractsWithTranslator;
-use Esign\TranslationLoader\Tests\Support\MakesQueryCountAssertions;
+use Esign\TranslationLoader\Tests\Concerns\InteractsWithTranslator;
+use Esign\TranslationLoader\Tests\Concerns\MakesQueryCountAssertions;
 use Esign\TranslationLoader\TranslationLoaderServiceProvider;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
