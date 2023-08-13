@@ -1,10 +1,11 @@
 <?php
 
-namespace Esign\TranslationLoader\Tests;
+namespace Esign\TranslationLoader\Tests\Feature;
 
 use Esign\TranslationLoader\Exceptions\InvalidConfiguration;
 use Esign\TranslationLoader\Tests\Models\CustomTranslationModel;
 use Esign\TranslationLoader\Tests\Models\InvalidTranslationModel;
+use Esign\TranslationLoader\Tests\TestCase;
 use Esign\TranslationLoader\TranslationLoaderServiceProvider;
 use Illuminate\Support\Facades\Config;
 

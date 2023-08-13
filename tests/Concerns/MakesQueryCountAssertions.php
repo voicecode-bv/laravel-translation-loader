@@ -1,6 +1,6 @@
 <?php
 
-namespace Esign\TranslationLoader\Tests\Support;
+namespace Esign\TranslationLoader\Tests\Concerns;
 
 use Illuminate\Database\Connection;
 

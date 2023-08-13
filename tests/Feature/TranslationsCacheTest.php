@@ -1,10 +1,11 @@
 <?php
 
-namespace Esign\TranslationLoader\Tests;
+namespace Esign\TranslationLoader\Tests\Feature;
 
 use Esign\TranslationLoader\Models\Translation;
-use Esign\TranslationLoader\Tests\Support\InteractsWithTranslator;
-use Esign\TranslationLoader\Tests\Support\MakesQueryCountAssertions;
+use Esign\TranslationLoader\Tests\Concerns\InteractsWithTranslator;
+use Esign\TranslationLoader\Tests\Concerns\MakesQueryCountAssertions;
+use Esign\TranslationLoader\Tests\TestCase;
 use Esign\TranslationLoader\TranslationsCache;
 
 class TranslationsCacheTest extends TestCase

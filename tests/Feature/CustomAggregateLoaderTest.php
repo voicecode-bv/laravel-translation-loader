@@ -1,8 +1,9 @@
 <?php
 
-namespace Esign\TranslationLoader\Tests;
+namespace Esign\TranslationLoader\Tests\Feature;
 
 use Esign\TranslationLoader\Tests\Loaders\CustomAggregateLoader;
+use Esign\TranslationLoader\Tests\TestCase;
 use Illuminate\Support\Facades\Config;
 
 class CustomAggregateLoaderTest extends TestCase

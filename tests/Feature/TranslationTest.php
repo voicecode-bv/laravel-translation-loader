@@ -1,8 +1,9 @@
 <?php
 
-namespace Esign\TranslationLoader\Tests;
+namespace Esign\TranslationLoader\Tests\Feature;
 
 use Esign\TranslationLoader\Models\Translation;
+use Esign\TranslationLoader\Tests\TestCase;
 
 class TranslationTest extends TestCase
 {
