@@ -4,6 +4,8 @@ namespace Esign\TranslationLoader\Tests\Feature;
 
 use Esign\TranslationLoader\Models\Translation;
 use Esign\TranslationLoader\Tests\TestCase;
+use Esign\TranslationLoader\Translator;
+use Illuminate\Support\Facades\Config;
 
 class TranslationTest extends TestCase
 {
@@ -53,6 +55,8 @@ class TranslationTest extends TestCase
     /** @test */
     public function it_can_retrieve_a_database_translation_using_a_fallback()
     {
+        Config::set('app.locale', 'nl');
+        Config::set('app.fallback_locale', 'en');
         $this->createTranslation('*', 'database.key', [
             'value_en' => 'test en',
             'value_nl' => null,
@@ -84,7 +88,7 @@ class TranslationTest extends TestCase
     /** @test */
     public function it_can_create_a_translation_entry_when_the_key_does_not_exist()
     {
-        app('translator')->createMissingTranslations();
+        app(Translator::class)->createMissingTranslations();
         trans('this-key-does-not-exist');
 
         $this->assertDatabaseHas(Translation::class, [
@@ -96,7 +100,7 @@ class TranslationTest extends TestCase
     /** @test */
     public function it_wont_create_multiple_translation_entries_when_the_translation_was_called_multiple_times()
     {
-        app('translator')->createMissingTranslations();
+        app(Translator::class)->createMissingTranslations();
         trans('this-key-does-not-exist');
         trans('this-key-does-not-exist');
 
@@ -107,7 +111,7 @@ class TranslationTest extends TestCase
     public function it_can_pass_the_app_locale_to_the_missing_key_callback_when_no_locale_is_given()
     {
         app()->setLocale('en');
-        app('translator')->setMissingKeyCallback(function (string $locale, string $key) {
+        app(Translator::class)->setMissingKeyCallback(function (string $locale, string $key) {
             return $locale;
         });
 
@@ -117,7 +121,7 @@ class TranslationTest extends TestCase
     /** @test */
     public function it_can_pass_the_correct_locale_to_the_missing_key_callback()
     {
-        app('translator')->setMissingKeyCallback(function (string $locale, string $key) {
+        app(Translator::class)->setMissingKeyCallback(function (string $locale, string $key) {
             return $locale;
         });
 
@@ -127,7 +131,7 @@ class TranslationTest extends TestCase
     /** @test */
     public function it_can_pass_the_correct_key_to_the_missing_key_callback()
     {
-        app('translator')->setMissingKeyCallback(function (string $locale, string $key) {
+        app(Translator::class)->setMissingKeyCallback(function (string $locale, string $key) {
             return $key;
         });
 
@@ -137,7 +141,7 @@ class TranslationTest extends TestCase
     /** @test */
     public function it_can_set_a_missing_key_callback_and_return_a_custom_value()
     {
-        app('translator')->setMissingKeyCallback(function (string $locale, string $key) {
+        app(Translator::class)->setMissingKeyCallback(function (string $locale, string $key) {
             return 'Custom value';
         });
 
@@ -147,7 +151,7 @@ class TranslationTest extends TestCase
     /** @test */
     public function it_can_set_a_missing_key_callback_and_return_a_custom_value_with_replacements()
     {
-        app('translator')->setMissingKeyCallback(function (string $locale, string $key) {
+        app(Translator::class)->setMissingKeyCallback(function (string $locale, string $key) {
             return 'Custom value :value';
         });
 
@@ -158,7 +162,7 @@ class TranslationTest extends TestCase
     public function it_wont_call_the_missing_key_callback_when_the_translation_exists_with_a_null_value()
     {
         $this->createTranslation('*', 'translation-key', ['value_en' => null]);
-        app('translator')->setMissingKeyCallback(function (string $locale, string $key) {
+        app(Translator::class)->setMissingKeyCallback(function (string $locale, string $key) {
             return 'Custom';
         });
 
@@ -168,7 +172,7 @@ class TranslationTest extends TestCase
     /** @test */
     public function it_wont_call_the_missing_key_callback_when_the_translation_exists_in_a_json_file()
     {
-        app('translator')->setMissingKeyCallback(function (string $locale, string $key) {
+        app(Translator::class)->setMissingKeyCallback(function (string $locale, string $key) {
             $this->fail('The missing key callback was called unexpectedly.');
         });
 
@@ -178,7 +182,7 @@ class TranslationTest extends TestCase
     /** @test */
     public function it_wont_call_the_missing_key_callback_when_the_translation_exists_in_a_php_file()
     {
-        app('translator')->setMissingKeyCallback(function (string $locale, string $key) {
+        app(Translator::class)->setMissingKeyCallback(function (string $locale, string $key) {
             $this->fail('The missing key callback was called unexpectedly.');
         });
 
