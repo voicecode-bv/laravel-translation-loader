@@ -111,7 +111,7 @@ class TranslationTest extends TestCase
     public function it_can_pass_the_app_locale_to_the_missing_key_callback_when_no_locale_is_given()
     {
         app()->setLocale('en');
-        app(Translator::class)->setMissingKeyCallback(function (string $locale, string $key) {
+        app(Translator::class)->setMissingKeyCallback(function (string $key, string $locale) {
             return $locale;
         });
 
@@ -121,7 +121,7 @@ class TranslationTest extends TestCase
     /** @test */
     public function it_can_pass_the_correct_locale_to_the_missing_key_callback()
     {
-        app(Translator::class)->setMissingKeyCallback(function (string $locale, string $key) {
+        app(Translator::class)->setMissingKeyCallback(function (string $key, string $locale) {
             return $locale;
         });
 
@@ -131,7 +131,7 @@ class TranslationTest extends TestCase
     /** @test */
     public function it_can_pass_the_correct_key_to_the_missing_key_callback()
     {
-        app(Translator::class)->setMissingKeyCallback(function (string $locale, string $key) {
+        app(Translator::class)->setMissingKeyCallback(function (string $key, string $locale) {
             return $key;
         });
 
@@ -141,7 +141,7 @@ class TranslationTest extends TestCase
     /** @test */
     public function it_can_set_a_missing_key_callback_and_return_a_custom_value()
     {
-        app(Translator::class)->setMissingKeyCallback(function (string $locale, string $key) {
+        app(Translator::class)->setMissingKeyCallback(function (string $key, string $locale) {
             return 'Custom value';
         });
 
@@ -151,7 +151,7 @@ class TranslationTest extends TestCase
     /** @test */
     public function it_can_set_a_missing_key_callback_and_return_a_custom_value_with_replacements()
     {
-        app(Translator::class)->setMissingKeyCallback(function (string $locale, string $key) {
+        app(Translator::class)->setMissingKeyCallback(function (string $key, string $locale) {
             return 'Custom value :value';
         });
 
@@ -162,7 +162,7 @@ class TranslationTest extends TestCase
     public function it_wont_call_the_missing_key_callback_when_the_translation_exists_with_a_null_value()
     {
         $this->createTranslation('*', 'translation-key', ['value_en' => null]);
-        app(Translator::class)->setMissingKeyCallback(function (string $locale, string $key) {
+        app(Translator::class)->setMissingKeyCallback(function (string $key, string $locale) {
             return 'Custom';
         });
 
@@ -172,7 +172,7 @@ class TranslationTest extends TestCase
     /** @test */
     public function it_wont_call_the_missing_key_callback_when_the_translation_exists_in_a_json_file()
     {
-        app(Translator::class)->setMissingKeyCallback(function (string $locale, string $key) {
+        app(Translator::class)->setMissingKeyCallback(function (string $key, string $locale) {
             $this->fail('The missing key callback was called unexpectedly.');
         });
 
@@ -182,7 +182,7 @@ class TranslationTest extends TestCase
     /** @test */
     public function it_wont_call_the_missing_key_callback_when_the_translation_exists_in_a_php_file()
     {
-        app(Translator::class)->setMissingKeyCallback(function (string $locale, string $key) {
+        app(Translator::class)->setMissingKeyCallback(function (string $key, string $locale) {
             $this->fail('The missing key callback was called unexpectedly.');
         });
 

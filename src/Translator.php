@@ -18,7 +18,7 @@ class Translator extends TranslationTranslator
 
     public function createMissingTranslations(): void
     {
-        $this->setMissingKeyCallback(function (string $locale, string $key) {
+        $this->setMissingKeyCallback(function (string $key, string $locale) {
             $translation = new Translation();
             $translation->group = '*';
             $translation->key = $key;
@@ -39,9 +39,9 @@ class Translator extends TranslationTranslator
     public function get($key, array $replace = [], $locale = null, $fallback = true): string|array
     {
         $locale = $locale ?: $this->locale;
-        if (! $this->hasLine($locale, $key) && ! is_null($this->missingKeyCallback)) {
+        if (! $this->hasLine($key, $locale) && ! is_null($this->missingKeyCallback)) {
             return $this->makeReplacements(
-                call_user_func($this->missingKeyCallback, $locale, $key),
+                call_user_func($this->missingKeyCallback, $key, $locale),
                 $replace
             );
         }
@@ -54,7 +54,7 @@ class Translator extends TranslationTranslator
         $this->loaded[$namespace][$group][$locale][$key] = $value;
     }
 
-    protected function hasLine(?string $locale, string $key): bool
+    protected function hasLine(string $key, ?string $locale = null): bool
     {
         $locale = $locale ?: $this->locale;
 
