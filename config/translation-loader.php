@@ -17,6 +17,7 @@ return [
 
     /**
      * This is the model that will be used by the DatabaseLoader.
+     * You may provide a class that implements the UnderscoreTranslatable trait.
      */
     'model' => \Esign\TranslationLoader\Models\Translation::class,
 
