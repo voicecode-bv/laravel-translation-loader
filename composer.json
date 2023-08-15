@@ -1,4 +1,4 @@
-{
+    {
     "name": "esign/laravel-translation-loader",
     "description": "Load translations from the database or other sources.",
     "keywords": [
@@ -52,7 +52,10 @@
         "laravel": {
             "providers": [
                 "Esign\\TranslationLoader\\TranslationLoaderServiceProvider"
-            ]
+            ],
+            "aliases": {
+                "Translator": "Esign\\TranslationLoader\\Facades\\Translator"
+            }
         }
     },
     "minimum-stability": "dev",
