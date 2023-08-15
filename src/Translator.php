@@ -19,7 +19,8 @@ class Translator extends TranslationTranslator
     public function createMissingTranslations(): void
     {
         $this->setMissingKeyCallback(function (string $key, string $locale) {
-            $translation = new Translation();
+            $configuredModelClass = TranslationLoaderServiceProvider::getConfiguredModel();
+            $translation = new $configuredModelClass();
             $translation->group = '*';
             $translation->key = $key;
             $translation->save();
