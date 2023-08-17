@@ -31,8 +31,7 @@ class TranslationLoaderServiceProvider extends BaseTranslationServiceProvider
 
     public function register()
     {
-        parent::register();
-
+        $this->registerLoader();
         $this->registerTranslator();
         $this->registerTranslationsCache();
         $this->mergeConfigFrom($this->configPath(), 'translation-loader');
@@ -62,7 +61,6 @@ class TranslationLoaderServiceProvider extends BaseTranslationServiceProvider
 
     protected function registerTranslator(): void
     {
-        $this->app->alias('translator', Translator::class);
         $this->app->singleton('translator', function ($app) {
             $translator = config('translation-loader.translator') ?? Translator::class;
             $loader = $app['translation.loader'];

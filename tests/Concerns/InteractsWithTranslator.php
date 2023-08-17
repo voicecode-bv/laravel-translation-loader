@@ -10,7 +10,7 @@ trait InteractsWithTranslator
 
     protected function setUpInteractsWithTranslator(): void
     {
-        $this->translator = app(Translator::class);
+        $this->translator = app('translator');
     }
 
     protected function resetInternalTranslatorCache(): void

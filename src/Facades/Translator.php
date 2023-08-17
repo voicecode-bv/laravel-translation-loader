@@ -13,6 +13,6 @@ class Translator extends Facade
 {
     protected static function getFacadeAccessor(): string
     {
-        return TranslationLoaderTranslator::class;
+        return 'translator';
     }
 }
