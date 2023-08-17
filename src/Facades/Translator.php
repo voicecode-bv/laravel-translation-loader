@@ -2,7 +2,6 @@
 
 namespace Esign\TranslationLoader\Facades;
 
-use Esign\TranslationLoader\Translator as TranslationLoaderTranslator;
 use Illuminate\Support\Facades\Facade;
 
 /**

@@ -4,7 +4,6 @@ namespace Esign\TranslationLoader\Tests\Feature;
 
 use Esign\TranslationLoader\Models\Translation;
 use Esign\TranslationLoader\Tests\TestCase;
-use Esign\TranslationLoader\Translator;
 use Illuminate\Support\Facades\Config;
 
 class TranslationTest extends TestCase
