@@ -5,6 +5,7 @@ namespace Esign\TranslationLoader;
 use Closure;
 use Esign\TranslationLoader\Models\Translation;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 use Illuminate\Translation\Translator as TranslationTranslator;
 
 class Translator extends TranslationTranslator
@@ -19,6 +20,10 @@ class Translator extends TranslationTranslator
     public function createMissingTranslations(): void
     {
         $this->setMissingKeyCallback(function (string $key, string $locale) {
+            if ($this->shouldSkipTranslationCreation($key)) {
+                return $key;
+            }
+
             $configuredModelClass = TranslationLoaderServiceProvider::getConfiguredModel();
             $translation = new $configuredModelClass();
             $translation->group = '*';
@@ -80,5 +85,18 @@ class Translator extends TranslationTranslator
 
         // In any other case, the translation is not loaded
         return false;
+    }
+
+    protected function shouldSkipTranslationCreation(string $key): bool
+    {
+        return Str::contains($key, [
+            // https://github.com/laravel/framework/blob/10.x/src/Illuminate/Validation/Concerns/FormatsMessages.php#L445
+            'validation.values',
+            // https://github.com/laravel/framework/blob/10.x/src/Illuminate/Validation/Concerns/FormatsMessages.php#L38
+            // https://github.com/laravel/framework/blob/10.x/src/Illuminate/Validation/Concerns/FormatsMessages.php#L159
+            'validation.custom',
+            // https://github.com/laravel/framework/blob/10.x/src/Illuminate/Validation/Concerns/FormatsMessages.php#L309
+            'validation.attributes',
+        ]);
     }
 }

@@ -5,6 +5,8 @@ namespace Esign\TranslationLoader\Tests\Feature;
 use Esign\TranslationLoader\Models\Translation;
 use Esign\TranslationLoader\Tests\TestCase;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\ValidationException;
 
 class TranslationTest extends TestCase
 {
@@ -67,20 +69,20 @@ class TranslationTest extends TestCase
     /** @test */
     public function it_can_retrieve_a_database_translation_as_a_string_if_the_full_nested_key_is_given()
     {
-        $this->createTranslation('validation', 'test', ['value_en' => 'test en']);
+        $this->createTranslation('errors', 'test', ['value_en' => 'test en']);
 
-        $this->assertEquals('test en', trans('validation.test'));
+        $this->assertEquals('test en', trans('errors.test'));
     }
 
     /** @test */
     public function it_can_retrieve_a_database_translation_as_an_array_if_a_part_of_the_nested_key_is_given()
     {
-        $this->createTranslation('validation', 'testA', ['value_en' => 'testA en']);
-        $this->createTranslation('validation', 'testB', ['value_en' => 'testB en']);
+        $this->createTranslation('errors', 'testA', ['value_en' => 'testA en']);
+        $this->createTranslation('errors', 'testB', ['value_en' => 'testB en']);
 
         $this->assertEquals(
             ['testA' => 'testA en', 'testB' => 'testB en'],
-            trans('validation')
+            trans('errors')
         );
     }
 
@@ -104,6 +106,27 @@ class TranslationTest extends TestCase
         trans('this-key-does-not-exist');
 
         $this->assertDatabaseCount(Translation::class, 1);
+    }
+
+    /** @test */
+    public function it_wont_create_internal_laravel_translation_keys_when_validating()
+    {
+        app('translator')->createMissingTranslations();
+        $validator = Validator::make(
+            data: ['email' => null],
+            rules: ['email' => 'required'],
+        );
+
+        try {
+            $validator->validated();
+        } catch (ValidationException) {
+        };
+
+        $this->assertDatabaseCount(Translation::class, 0);
+        $this->assertDatabaseMissing(Translation::class, ['key' => 'validation.values.email.']);
+        $this->assertDatabaseMissing(Translation::class, ['key' => 'validation.custom']);
+        $this->assertDatabaseMissing(Translation::class, ['key' => 'validation.custom.email.required']);
+        $this->assertDatabaseMissing(Translation::class, ['key' => 'validation.attributes']);
     }
 
     /** @test */
