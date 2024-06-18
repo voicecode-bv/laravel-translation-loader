@@ -186,6 +186,19 @@ However, if you make changes outside of these operations, you need to manually c
 php artisan translations:clear-cache
 ```
 
+### Importing file translations to the database
+This package ships with an Artisan command that allows you to import file translations into the database.
+This can be useful when you want to migrate your translations from file-based to database-based storage.
+You should specify the locales you want to import translations for as a comma-separated list:
+```bash
+php artisan translations:import-files-to-database --locales=en,nl
+```
+
+You can optionally specify the `--overwrite` flag to overwrite any existing translations.
+```bash
+php artisan translations:import-files-to-database --locales=en,nl --overwrite
+```
+
 ### FAQ
 <details>
 <summary>Installation conflict with [mcamara/laravel-localization](https://github.com/mcamara/laravel-localization)</summary>
