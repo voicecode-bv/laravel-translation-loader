@@ -5,12 +5,9 @@ namespace Esign\TranslationLoader\Tests\Feature\Commands;
 use Esign\TranslationLoader\Commands\ImportFileTranslationsToDatabaseCommand;
 use Esign\TranslationLoader\Models\Translation;
 use Esign\TranslationLoader\Tests\TestCase;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class ImportFileTranslationToDatabaseCommandTest extends TestCase
 {
-    use RefreshDatabase;
-
     /** @test */
     public function it_can_import_translations()
     {
