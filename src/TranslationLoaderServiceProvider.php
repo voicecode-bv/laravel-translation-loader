@@ -3,6 +3,7 @@
 namespace Esign\TranslationLoader;
 
 use Esign\TranslationLoader\Commands\ClearTranslationsCacheCommand;
+use Esign\TranslationLoader\Commands\ImportFileTranslationsToDatabaseCommand;
 use Esign\TranslationLoader\Exceptions\InvalidConfiguration;
 use Esign\TranslationLoader\Loaders\AggregateLoader;
 use Esign\TranslationLoader\Models\Translation;
@@ -17,7 +18,10 @@ class TranslationLoaderServiceProvider extends BaseTranslationServiceProvider
     public function boot()
     {
         if ($this->app->runningInConsole()) {
-            $this->commands([ClearTranslationsCacheCommand::class]);
+            $this->commands([
+                ClearTranslationsCacheCommand::class,
+                ImportFileTranslationsToDatabaseCommand::class,
+            ]);
 
             $this->publishes([
                 $this->configPath() => config_path('translation-loader.php'),
