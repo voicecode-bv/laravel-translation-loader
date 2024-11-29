@@ -108,6 +108,39 @@ class TranslationTest extends TestCase
         $this->assertDatabaseCount(Translation::class, 1);
     }
 
+    /**
+     * @test
+     * This can occur if a translation key exists in the database but not in the cache.
+     * This might happen if the cache was not cleared properly or if the translation was directly added to the database.
+     * In such cases, the database will throw an exception due to the unique constraint on the key.
+     * We expect the translator to catch this exception and continue without throwing an error.
+     */
+    public function it_wont_throw_exceptions_if_the_translation_key_already_exists()
+    {
+        // We expect this test to not throw any exceptions.
+        $this->expectNotToPerformAssertions();
+
+        // Call the translation key to make sure the translations cache is built.
+        trans('welcome');
+
+        // Simulate the translation key manually being added to the database.
+        Translation::withoutEvents(function () {
+            Translation::create([
+                'group' => '*',
+                'key' => 'welcome',
+                'value_en' => 'Hello World!',
+                'value_nl' => 'Hallo Wereld!',
+            ]);
+        });
+
+        // Ensure the translator will create missing translations.
+        app('translator')->createMissingTranslations();
+
+        // Call the translation key again to trigger the translation creation.
+        // This should not throw an exception.
+        trans('welcome');
+    }
+
     /** @test */
     public function it_wont_create_internal_laravel_translation_keys_when_validating()
     {

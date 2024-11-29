@@ -4,6 +4,7 @@ namespace Esign\TranslationLoader;
 
 use Closure;
 use Esign\TranslationLoader\Models\Translation;
+use Illuminate\Database\QueryException;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Illuminate\Translation\Translator as TranslationTranslator;
@@ -25,10 +26,16 @@ class Translator extends TranslationTranslator
             }
 
             $configuredModelClass = TranslationLoaderServiceProvider::getConfiguredModel();
-            $translation = new $configuredModelClass();
-            $translation->group = '*';
-            $translation->key = $key;
-            $translation->save();
+
+            try {
+                $translation = new $configuredModelClass();
+                $translation->group = '*';
+                $translation->key = $key;
+                $translation->save();
+            } catch (QueryException $e) {
+                // Rethrow the exception if it's not a duplicate key error
+                throw_if($e->getCode() !== '23000', $e);
+            }
 
             $this->addLine(
                 namespace: '*',
