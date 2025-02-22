@@ -16,7 +16,7 @@ class AggregateLoader extends FileLoader implements TranslationLoaderContract
         return array_merge($fileTranslations, $aggregateTranslations);
     }
 
-    public function loadTranslations(string $locale, string $group, string $namespace = null): array
+    public function loadTranslations(string $locale, string $group, ?string $namespace = null): array
     {
         return collect(config('translation-loader.loaders'))
             ->map(fn ($className) => app($className))
