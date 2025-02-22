@@ -2,18 +2,19 @@
 
 namespace Esign\TranslationLoader\Tests\Feature\Commands;
 
+use PHPUnit\Framework\Attributes\Test;
 use Esign\TranslationLoader\Commands\ClearTranslationsCacheCommand;
 use Esign\TranslationLoader\Tests\Concerns\InteractsWithTranslator;
 use Esign\TranslationLoader\Tests\Concerns\MakesQueryCountAssertions;
 use Esign\TranslationLoader\Tests\TestCase;
 
-class ClearTranslationsCacheCommandTest extends TestCase
+final class ClearTranslationsCacheCommandTest extends TestCase
 {
     use InteractsWithTranslator;
     use MakesQueryCountAssertions;
 
-    /** @test */
-    public function it_can_clear_the_translations_cache()
+    #[Test]
+    public function it_can_clear_the_translations_cache(): void
     {
         // Request the translation so the database translations get queried and cached.
         // This causes the first database query.
