@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Config;
 class CustomTranslationModelTest extends TestCase
 {
     #[Test]
-    public function it_can_use_a_custom_model_to_load_database_translations()
+    public function it_can_use_a_custom_model_to_load_database_translations(): void
     {
         Config::set('translation-loader.model', CustomTranslationModel::class);
         CustomTranslationModel::create([
@@ -26,7 +26,7 @@ class CustomTranslationModelTest extends TestCase
     }
 
     #[Test]
-    public function it_will_throw_an_exception_when_the_model_does_not_implement_the_redirect_contract()
+    public function it_will_throw_an_exception_when_the_model_does_not_implement_the_redirect_contract(): void
     {
         Config::set('translation-loader.model', InvalidTranslationModel::class);
         $this->expectException(InvalidConfiguration::class);

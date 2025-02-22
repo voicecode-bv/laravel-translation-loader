@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Config;
 class CustomAggregateLoaderTest extends TestCase
 {
     #[Test]
-    public function it_can_use_a_custom_aggregate_loader()
+    public function it_can_use_a_custom_aggregate_loader(): void
     {
         Config::set('translation-loader.aggregate_loader', CustomAggregateLoader::class);
 

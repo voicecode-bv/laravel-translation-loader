@@ -10,7 +10,7 @@ use Esign\TranslationLoader\Tests\TestCase;
 class ImportFileTranslationToDatabaseCommandTest extends TestCase
 {
     #[Test]
-    public function it_can_import_translations()
+    public function it_can_import_translations(): void
     {
         $this->artisan(ImportFileTranslationsToDatabaseCommand::class, ['--locales' => 'en,nl']);
 
@@ -23,7 +23,7 @@ class ImportFileTranslationToDatabaseCommandTest extends TestCase
     }
 
     #[Test]
-    public function it_can_import_translations_for_specific_locales()
+    public function it_can_import_translations_for_specific_locales(): void
     {
         $this->artisan(ImportFileTranslationsToDatabaseCommand::class, ['--locales' => 'en']);
 
@@ -36,7 +36,7 @@ class ImportFileTranslationToDatabaseCommandTest extends TestCase
     }
 
     #[Test]
-    public function it_wont_overwrite_existing_translations_when_the_overwrite_flag_was_not_given()
+    public function it_wont_overwrite_existing_translations_when_the_overwrite_flag_was_not_given(): void
     {
         Translation::create([
             'group' => '*',
@@ -56,7 +56,7 @@ class ImportFileTranslationToDatabaseCommandTest extends TestCase
     }
 
     #[Test]
-    public function it_can_overwrite_existing_translations()
+    public function it_can_overwrite_existing_translations(): void
     {
         Translation::create([
             'group' => '*',
@@ -76,7 +76,7 @@ class ImportFileTranslationToDatabaseCommandTest extends TestCase
     }
 
     #[Test]
-    public function it_wont_overwrite_existing_translations_for_locales_that_were_not_specified()
+    public function it_wont_overwrite_existing_translations_for_locales_that_were_not_specified(): void
     {
         Translation::create([
             'group' => '*',
@@ -96,7 +96,7 @@ class ImportFileTranslationToDatabaseCommandTest extends TestCase
     }
 
     #[Test]
-    public function it_can_report_the_affected_records()
+    public function it_can_report_the_affected_records(): void
     {
         $command = $this->artisan(ImportFileTranslationsToDatabaseCommand::class, ['--locales' => 'en']);
 
@@ -105,7 +105,7 @@ class ImportFileTranslationToDatabaseCommandTest extends TestCase
     }
 
     #[Test]
-    public function it_can_report_the_affected_records_when_a_translation_is_already_present()
+    public function it_can_report_the_affected_records_when_a_translation_is_already_present(): void
     {
         Translation::create([
             'group' => '*',
@@ -120,7 +120,7 @@ class ImportFileTranslationToDatabaseCommandTest extends TestCase
     }
 
     #[Test]
-    public function it_can_report_affected_records_when_the_overwrite_flag_is_given()
+    public function it_can_report_affected_records_when_the_overwrite_flag_is_given(): void
     {
         $command = $this->artisan(ImportFileTranslationsToDatabaseCommand::class, ['--locales' => 'en', '--overwrite' => true]);
 
@@ -129,7 +129,7 @@ class ImportFileTranslationToDatabaseCommandTest extends TestCase
     }
 
     #[Test]
-    public function it_can_report_affected_records_when_the_overwrite_flag_is_given_and_a_translation_is_already_present()
+    public function it_can_report_affected_records_when_the_overwrite_flag_is_given_and_a_translation_is_already_present(): void
     {
         Translation::create([
             'group' => '*',

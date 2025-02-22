@@ -14,7 +14,7 @@ class ClearTranslationsCacheCommandTest extends TestCase
     use MakesQueryCountAssertions;
 
     #[Test]
-    public function it_can_clear_the_translations_cache()
+    public function it_can_clear_the_translations_cache(): void
     {
         // Request the translation so the database translations get queried and cached.
         // This causes the first database query.

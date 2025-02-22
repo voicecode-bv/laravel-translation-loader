@@ -25,7 +25,7 @@ class TranslationsCacheTest extends TestCase
     }
 
     #[Test]
-    public function it_can_cache_translations()
+    public function it_can_cache_translations(): void
     {
         // Request the translation so the database translations get queried and cached.
         // This causes the first database query.
@@ -42,7 +42,7 @@ class TranslationsCacheTest extends TestCase
     }
 
     #[Test]
-    public function it_can_clear_the_cache_when_creating_a_translation()
+    public function it_can_clear_the_cache_when_creating_a_translation(): void
     {
         // Request the translation so the database translations get queried and cached.
         // This causes the first database query.
@@ -63,7 +63,7 @@ class TranslationsCacheTest extends TestCase
     }
 
     #[Test]
-    public function it_can_clear_the_cache_when_updating_a_translation()
+    public function it_can_clear_the_cache_when_updating_a_translation(): void
     {
         // Create the database translation, which causes the first query.
         $translation = Translation::query()->create(['group' => '*', 'key' => 'translation-key']);
@@ -87,7 +87,7 @@ class TranslationsCacheTest extends TestCase
     }
 
     #[Test]
-    public function it_can_clear_the_cache_when_deleting_a_translation()
+    public function it_can_clear_the_cache_when_deleting_a_translation(): void
     {
         // Create the database translation, which causes the first query.
         $translation = Translation::query()->create(['group' => '*', 'key' => 'translation-key']);
