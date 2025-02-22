@@ -7,7 +7,7 @@ use Esign\TranslationLoader\Tests\Loaders\CustomAggregateLoader;
 use Esign\TranslationLoader\Tests\TestCase;
 use Illuminate\Support\Facades\Config;
 
-class CustomAggregateLoaderTest extends TestCase
+final class CustomAggregateLoaderTest extends TestCase
 {
     #[Test]
     public function it_can_use_a_custom_aggregate_loader(): void

@@ -10,7 +10,7 @@ use Esign\TranslationLoader\Tests\TestCase;
 use Esign\TranslationLoader\TranslationLoaderServiceProvider;
 use Illuminate\Support\Facades\Config;
 
-class CustomTranslationModelTest extends TestCase
+final class CustomTranslationModelTest extends TestCase
 {
     #[Test]
     public function it_can_use_a_custom_model_to_load_database_translations(): void

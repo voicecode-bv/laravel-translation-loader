@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
 
-class TranslationTest extends TestCase
+final class TranslationTest extends TestCase
 {
     #[Test]
     public function it_can_retrieve_a_file_translation(): void

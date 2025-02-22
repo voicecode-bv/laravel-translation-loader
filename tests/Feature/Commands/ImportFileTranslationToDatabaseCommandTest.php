@@ -7,7 +7,7 @@ use Esign\TranslationLoader\Commands\ImportFileTranslationsToDatabaseCommand;
 use Esign\TranslationLoader\Models\Translation;
 use Esign\TranslationLoader\Tests\TestCase;
 
-class ImportFileTranslationToDatabaseCommandTest extends TestCase
+final class ImportFileTranslationToDatabaseCommandTest extends TestCase
 {
     #[Test]
     public function it_can_import_translations(): void

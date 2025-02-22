@@ -7,7 +7,7 @@ use Esign\TranslationLoader\Loaders\AggregateLoader;
 use Esign\TranslationLoader\Tests\TestCase;
 use Esign\TranslationLoader\Translator;
 
-class TranslationLoaderServiceProviderTest extends TestCase
+final class TranslationLoaderServiceProviderTest extends TestCase
 {
     #[Test]
     public function it_can_override_the_translator_binding_in_the_container(): void

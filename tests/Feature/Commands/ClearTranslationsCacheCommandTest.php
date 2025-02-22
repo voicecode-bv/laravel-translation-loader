@@ -8,7 +8,7 @@ use Esign\TranslationLoader\Tests\Concerns\InteractsWithTranslator;
 use Esign\TranslationLoader\Tests\Concerns\MakesQueryCountAssertions;
 use Esign\TranslationLoader\Tests\TestCase;
 
-class ClearTranslationsCacheCommandTest extends TestCase
+final class ClearTranslationsCacheCommandTest extends TestCase
 {
     use InteractsWithTranslator;
     use MakesQueryCountAssertions;

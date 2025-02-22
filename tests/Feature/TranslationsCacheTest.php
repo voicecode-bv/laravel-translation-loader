@@ -9,7 +9,7 @@ use Esign\TranslationLoader\Tests\Concerns\MakesQueryCountAssertions;
 use Esign\TranslationLoader\Tests\TestCase;
 use Esign\TranslationLoader\TranslationsCache;
 
-class TranslationsCacheTest extends TestCase
+final class TranslationsCacheTest extends TestCase
 {
     use InteractsWithTranslator;
     use MakesQueryCountAssertions;
