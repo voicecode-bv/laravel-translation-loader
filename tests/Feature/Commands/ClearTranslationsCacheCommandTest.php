@@ -2,6 +2,7 @@
 
 namespace Esign\TranslationLoader\Tests\Feature\Commands;
 
+use PHPUnit\Framework\Attributes\Test;
 use Esign\TranslationLoader\Commands\ClearTranslationsCacheCommand;
 use Esign\TranslationLoader\Tests\Concerns\InteractsWithTranslator;
 use Esign\TranslationLoader\Tests\Concerns\MakesQueryCountAssertions;
@@ -12,7 +13,7 @@ class ClearTranslationsCacheCommandTest extends TestCase
     use InteractsWithTranslator;
     use MakesQueryCountAssertions;
 
-    /** @test */
+    #[Test]
     public function it_can_clear_the_translations_cache()
     {
         // Request the translation so the database translations get queried and cached.

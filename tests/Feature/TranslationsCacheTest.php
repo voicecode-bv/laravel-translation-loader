@@ -2,6 +2,7 @@
 
 namespace Esign\TranslationLoader\Tests\Feature;
 
+use PHPUnit\Framework\Attributes\Test;
 use Esign\TranslationLoader\Models\Translation;
 use Esign\TranslationLoader\Tests\Concerns\InteractsWithTranslator;
 use Esign\TranslationLoader\Tests\Concerns\MakesQueryCountAssertions;
@@ -23,7 +24,7 @@ class TranslationsCacheTest extends TestCase
         $this->translationsCache->forget();
     }
 
-    /** @test */
+    #[Test]
     public function it_can_cache_translations()
     {
         // Request the translation so the database translations get queried and cached.
@@ -40,7 +41,7 @@ class TranslationsCacheTest extends TestCase
         $this->assertQueryCount(1);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_clear_the_cache_when_creating_a_translation()
     {
         // Request the translation so the database translations get queried and cached.
@@ -61,7 +62,7 @@ class TranslationsCacheTest extends TestCase
         $this->assertQueryCount(3);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_clear_the_cache_when_updating_a_translation()
     {
         // Create the database translation, which causes the first query.
@@ -85,7 +86,7 @@ class TranslationsCacheTest extends TestCase
         $this->assertQueryCount(4);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_clear_the_cache_when_deleting_a_translation()
     {
         // Create the database translation, which causes the first query.

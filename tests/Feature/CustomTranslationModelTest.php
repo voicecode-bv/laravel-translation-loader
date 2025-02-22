@@ -2,6 +2,7 @@
 
 namespace Esign\TranslationLoader\Tests\Feature;
 
+use PHPUnit\Framework\Attributes\Test;
 use Esign\TranslationLoader\Exceptions\InvalidConfiguration;
 use Esign\TranslationLoader\Tests\Models\CustomTranslationModel;
 use Esign\TranslationLoader\Tests\Models\InvalidTranslationModel;
@@ -11,7 +12,7 @@ use Illuminate\Support\Facades\Config;
 
 class CustomTranslationModelTest extends TestCase
 {
-    /** @test */
+    #[Test]
     public function it_can_use_a_custom_model_to_load_database_translations()
     {
         Config::set('translation-loader.model', CustomTranslationModel::class);
@@ -24,7 +25,7 @@ class CustomTranslationModelTest extends TestCase
         $this->assertEquals('test en', trans('database.key'));
     }
 
-    /** @test */
+    #[Test]
     public function it_will_throw_an_exception_when_the_model_does_not_implement_the_redirect_contract()
     {
         Config::set('translation-loader.model', InvalidTranslationModel::class);

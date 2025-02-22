@@ -2,6 +2,7 @@
 
 namespace Esign\TranslationLoader\Tests\Feature;
 
+use PHPUnit\Framework\Attributes\Test;
 use Esign\TranslationLoader\Models\Translation;
 use Esign\TranslationLoader\Tests\TestCase;
 use Illuminate\Support\Facades\Config;
@@ -10,7 +11,7 @@ use Illuminate\Validation\ValidationException;
 
 class TranslationTest extends TestCase
 {
-    /** @test */
+    #[Test]
     public function it_can_retrieve_a_file_translation()
     {
         $this->assertEquals('en value', trans('file.key'));
@@ -18,7 +19,7 @@ class TranslationTest extends TestCase
         $this->assertEquals('this is a nested key', trans('file.nested-key.message'));
     }
 
-    /** @test */
+    #[Test]
     public function it_can_retrieve_a_file_translation_for_a_locale()
     {
         $this->assertEquals('nl value', trans('file.key', [], 'nl'));
@@ -26,7 +27,7 @@ class TranslationTest extends TestCase
         $this->assertEquals('dit is een geneste key', trans('file.nested-key.message', [], 'nl'));
     }
 
-    /** @test */
+    #[Test]
     public function it_can_retrieve_a_database_translation()
     {
         $this->createTranslation('*', 'database.key', ['value_en' => 'test en']);
@@ -34,7 +35,7 @@ class TranslationTest extends TestCase
         $this->assertEquals('test en', trans('database.key'));
     }
 
-    /** @test */
+    #[Test]
     public function it_can_retrieve_a_database_translation_for_a_locale()
     {
         $this->createTranslation('*', 'database.key', [
@@ -45,7 +46,7 @@ class TranslationTest extends TestCase
         $this->assertEquals('test nl', trans('database.key', [], 'nl'));
     }
 
-    /** @test */
+    #[Test]
     public function it_can_prefer_a_database_translation_over_a_file_translation()
     {
         $this->createTranslation('*', 'file.key', ['value_en' => 'en value database']);
@@ -53,7 +54,7 @@ class TranslationTest extends TestCase
         $this->assertEquals('en value database', trans('file.key'));
     }
 
-    /** @test */
+    #[Test]
     public function it_can_retrieve_a_database_translation_using_a_fallback()
     {
         Config::set('app.locale', 'nl');
@@ -66,7 +67,7 @@ class TranslationTest extends TestCase
         $this->assertEquals('test en', trans('database.key', [], 'nl'));
     }
 
-    /** @test */
+    #[Test]
     public function it_can_retrieve_a_database_translation_as_a_string_if_the_full_nested_key_is_given()
     {
         $this->createTranslation('errors', 'test', ['value_en' => 'test en']);
@@ -74,7 +75,7 @@ class TranslationTest extends TestCase
         $this->assertEquals('test en', trans('errors.test'));
     }
 
-    /** @test */
+    #[Test]
     public function it_can_retrieve_a_database_translation_as_an_array_if_a_part_of_the_nested_key_is_given()
     {
         $this->createTranslation('errors', 'testA', ['value_en' => 'testA en']);
@@ -86,7 +87,7 @@ class TranslationTest extends TestCase
         );
     }
 
-    /** @test */
+    #[Test]
     public function it_can_create_a_translation_entry_when_the_key_does_not_exist()
     {
         app('translator')->createMissingTranslations();
@@ -98,7 +99,7 @@ class TranslationTest extends TestCase
         ]);
     }
 
-    /** @test */
+    #[Test]
     public function it_wont_create_multiple_translation_entries_when_the_translation_was_called_multiple_times()
     {
         app('translator')->createMissingTranslations();
@@ -109,12 +110,12 @@ class TranslationTest extends TestCase
     }
 
     /**
-     * @test
      * This can occur if a translation key exists in the database but not in the cache.
      * This might happen if the cache was not cleared properly or if the translation was directly added to the database.
      * In such cases, the database will throw an exception due to the unique constraint on the key.
      * We expect the translator to catch this exception and continue without throwing an error.
      */
+    #[Test]
     public function it_wont_throw_exceptions_if_the_translation_key_already_exists()
     {
         // We expect this test to not throw any exceptions.
@@ -141,7 +142,7 @@ class TranslationTest extends TestCase
         trans('welcome');
     }
 
-    /** @test */
+    #[Test]
     public function it_wont_create_internal_laravel_translation_keys_when_validating()
     {
         app('translator')->createMissingTranslations();
@@ -162,7 +163,7 @@ class TranslationTest extends TestCase
         $this->assertDatabaseMissing(Translation::class, ['key' => 'validation.attributes']);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_pass_the_app_locale_to_the_missing_key_callback_when_no_locale_is_given()
     {
         app()->setLocale('en');
@@ -173,7 +174,7 @@ class TranslationTest extends TestCase
         $this->assertEquals('en', trans('translation-key'));
     }
 
-    /** @test */
+    #[Test]
     public function it_can_pass_the_correct_locale_to_the_missing_key_callback()
     {
         app('translator')->setMissingKeyCallback(function (string $key, string $locale) {
@@ -183,7 +184,7 @@ class TranslationTest extends TestCase
         $this->assertEquals('nl', trans('translation-key', [], 'nl'));
     }
 
-    /** @test */
+    #[Test]
     public function it_can_pass_the_correct_key_to_the_missing_key_callback()
     {
         app('translator')->setMissingKeyCallback(function (string $key, string $locale) {
@@ -193,7 +194,7 @@ class TranslationTest extends TestCase
         $this->assertEquals('translation-key', trans('translation-key'));
     }
 
-    /** @test */
+    #[Test]
     public function it_can_set_a_missing_key_callback_and_return_a_custom_value()
     {
         app('translator')->setMissingKeyCallback(function (string $key, string $locale) {
@@ -203,7 +204,7 @@ class TranslationTest extends TestCase
         $this->assertEquals('Custom value', trans('this-key-does-not-exist'));
     }
 
-    /** @test */
+    #[Test]
     public function it_can_set_a_missing_key_callback_and_return_a_custom_value_with_replacements()
     {
         app('translator')->setMissingKeyCallback(function (string $key, string $locale) {
@@ -213,7 +214,7 @@ class TranslationTest extends TestCase
         $this->assertEquals('Custom value abc', trans('this-key-does-not-exist', ['value' => 'abc']));
     }
 
-    /** @test */
+    #[Test]
     public function it_wont_call_the_missing_key_callback_when_the_translation_exists_with_a_null_value()
     {
         $this->createTranslation('*', 'translation-key', ['value_en' => null]);
@@ -224,7 +225,7 @@ class TranslationTest extends TestCase
         $this->assertEquals('translation-key', trans('translation-key'));
     }
 
-    /** @test */
+    #[Test]
     public function it_wont_call_the_missing_key_callback_when_the_translation_exists_in_a_json_file()
     {
         app('translator')->setMissingKeyCallback(function (string $key, string $locale) {
@@ -234,7 +235,7 @@ class TranslationTest extends TestCase
         $this->assertEquals('Hello world', trans('Hello world'));
     }
 
-    /** @test */
+    #[Test]
     public function it_wont_call_the_missing_key_callback_when_the_translation_exists_in_a_php_file()
     {
         app('translator')->setMissingKeyCallback(function (string $key, string $locale) {

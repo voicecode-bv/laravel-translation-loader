@@ -2,13 +2,14 @@
 
 namespace Esign\TranslationLoader\Tests\Feature\Commands;
 
+use PHPUnit\Framework\Attributes\Test;
 use Esign\TranslationLoader\Commands\ImportFileTranslationsToDatabaseCommand;
 use Esign\TranslationLoader\Models\Translation;
 use Esign\TranslationLoader\Tests\TestCase;
 
 class ImportFileTranslationToDatabaseCommandTest extends TestCase
 {
-    /** @test */
+    #[Test]
     public function it_can_import_translations()
     {
         $this->artisan(ImportFileTranslationsToDatabaseCommand::class, ['--locales' => 'en,nl']);
@@ -21,7 +22,7 @@ class ImportFileTranslationToDatabaseCommandTest extends TestCase
         ]);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_import_translations_for_specific_locales()
     {
         $this->artisan(ImportFileTranslationsToDatabaseCommand::class, ['--locales' => 'en']);
@@ -34,7 +35,7 @@ class ImportFileTranslationToDatabaseCommandTest extends TestCase
         ]);
     }
 
-    /** @test */
+    #[Test]
     public function it_wont_overwrite_existing_translations_when_the_overwrite_flag_was_not_given()
     {
         Translation::create([
@@ -54,7 +55,7 @@ class ImportFileTranslationToDatabaseCommandTest extends TestCase
         ]);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_overwrite_existing_translations()
     {
         Translation::create([
@@ -74,7 +75,7 @@ class ImportFileTranslationToDatabaseCommandTest extends TestCase
         ]);
     }
 
-    /** @test */
+    #[Test]
     public function it_wont_overwrite_existing_translations_for_locales_that_were_not_specified()
     {
         Translation::create([
@@ -94,7 +95,7 @@ class ImportFileTranslationToDatabaseCommandTest extends TestCase
         ]);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_report_the_affected_records()
     {
         $command = $this->artisan(ImportFileTranslationsToDatabaseCommand::class, ['--locales' => 'en']);
@@ -103,7 +104,7 @@ class ImportFileTranslationToDatabaseCommandTest extends TestCase
         $command->assertSuccessful();
     }
 
-    /** @test */
+    #[Test]
     public function it_can_report_the_affected_records_when_a_translation_is_already_present()
     {
         Translation::create([
@@ -118,7 +119,7 @@ class ImportFileTranslationToDatabaseCommandTest extends TestCase
         $command->assertSuccessful();
     }
 
-    /** @test */
+    #[Test]
     public function it_can_report_affected_records_when_the_overwrite_flag_is_given()
     {
         $command = $this->artisan(ImportFileTranslationsToDatabaseCommand::class, ['--locales' => 'en', '--overwrite' => true]);
@@ -127,7 +128,7 @@ class ImportFileTranslationToDatabaseCommandTest extends TestCase
         $command->assertSuccessful();
     }
 
-    /** @test */
+    #[Test]
     public function it_can_report_affected_records_when_the_overwrite_flag_is_given_and_a_translation_is_already_present()
     {
         Translation::create([
