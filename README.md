@@ -164,7 +164,7 @@ use Esign\TranslationLoader\Contracts\TranslationLoaderContract;
 
 class MyTranslationsLoader implements TranslationLoaderContract
 {
-    public function loadTranslations(string $locale, string $group, string $namespace = null): array
+    public function loadTranslations(string $locale, string $group, ?string $namespace = null): array
     {
         // Your implementation here
     }
