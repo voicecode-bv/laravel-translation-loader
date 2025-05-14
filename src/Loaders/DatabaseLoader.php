@@ -14,7 +14,7 @@ class DatabaseLoader implements TranslationLoaderContract
     {
     }
 
-    public function loadTranslations(string $locale, string $group, string $namespace = null): array
+    public function loadTranslations(string $locale, string $group, ?string $namespace = null): array
     {
         $configuredModel = TranslationLoaderServiceProvider::getConfiguredModel();
         $translations = $this->translationsCache->remember(fn () => $configuredModel::get());
