@@ -94,8 +94,37 @@ return [
      * This class overrides Laravel's default `translator` binding.
      */
     'translator' => \Esign\TranslationLoader\Translator::class,
+
+    /**
+     * Skip loading translations from the database.
+     * This is useful during deployments when the database might not be available.
+     * You can set this via the TRANSLATION_LOADER_SKIP_DATABASE environment variable.
+     */
+    'skip_database' => env('TRANSLATION_LOADER_SKIP_DATABASE', false),
+
+    /**
+     * Whether to log database connection errors when attempting to load translations.
+     * Set to false to suppress warnings during deployments.
+     */
+    'log_database_errors' => env('TRANSLATION_LOADER_LOG_DB_ERRORS', true),
 ];
 ```
+
+## Deployment Safety
+
+This package includes built-in deployment safety features to prevent database connection issues during deployments. When deploying your application, you can use environment variables to control database access:
+
+```bash
+# Skip database during deployment
+export TRANSLATION_LOADER_SKIP_DATABASE=true
+php artisan migrate --force
+php artisan config:cache
+
+# Re-enable after deployment
+export TRANSLATION_LOADER_SKIP_DATABASE=false
+```
+
+For detailed deployment instructions and examples, see the [Deployment Guide](DEPLOYMENT.md).
 
 ## Usage
 To create database translations you may use the `create` method on the `Translation` model:

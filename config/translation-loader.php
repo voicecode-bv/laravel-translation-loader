@@ -45,4 +45,17 @@ return [
      * This class overrides Laravel's default `translator` binding.
      */
     'translator' => \Esign\TranslationLoader\Translator::class,
+
+    /**
+     * Skip loading translations from the database.
+     * This is useful during deployments when the database might not be available.
+     * You can set this via the TRANSLATION_LOADER_SKIP_DATABASE environment variable.
+     */
+    'skip_database' => env('TRANSLATION_LOADER_SKIP_DATABASE', false),
+
+    /**
+     * Whether to log database connection errors when attempting to load translations.
+     * Set to false to suppress warnings during deployments.
+     */
+    'log_database_errors' => env('TRANSLATION_LOADER_LOG_DB_ERRORS', true),
 ];

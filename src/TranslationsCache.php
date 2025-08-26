@@ -22,10 +22,35 @@ class TranslationsCache
             ->remember($this->key, $this->ttl, $callback);
     }
 
+    public function rememberForGroup(string $groupKey, Closure $callback): mixed
+    {
+        $fullKey = $this->key . '.' . $groupKey;
+        
+        return $this
+            ->store
+            ->remember($fullKey, $this->ttl, $callback);
+    }
+
     public function forget(): bool
     {
         return $this
             ->store
             ->forget($this->key);
+    }
+
+    public function forgetGroup(string $groupKey): bool
+    {
+        $fullKey = $this->key . '.' . $groupKey;
+        
+        return $this
+            ->store
+            ->forget($fullKey);
+    }
+
+    public function flush(): bool
+    {
+        return $this
+            ->store
+            ->flush();
     }
 }
